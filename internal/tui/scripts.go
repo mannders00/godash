@@ -69,7 +69,7 @@ func runScriptCmd(script ScriptItem, index int) tea.Cmd {
 	}
 }
 
-func (m ScriptsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *ScriptsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case scriptDoneMsg:
 		if msg.index < len(m.scripts) {
@@ -145,7 +145,7 @@ func (m *ScriptsModel) updateDetail(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m ScriptsModel) View() string {
+func (m *ScriptsModel) View() string {
 	titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("14"))
 	selectedStyle := lipgloss.NewStyle().Background(lipgloss.Color("4")).Foreground(lipgloss.Color("15"))
 	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("7"))

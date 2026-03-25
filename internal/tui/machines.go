@@ -72,7 +72,7 @@ func checkMachines(machines []MachineItem) tea.Cmd {
 
 type machinesCheckedMsg []MachineItem
 
-func (m MachinesModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *MachinesModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tickMsg:
 		return m, checkMachines(m.machines)
@@ -119,7 +119,7 @@ func (m *MachinesModel) updateDetail(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m MachinesModel) View() string {
+func (m *MachinesModel) View() string {
 	titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("14"))
 	selectedStyle := lipgloss.NewStyle().Background(lipgloss.Color("4")).Foreground(lipgloss.Color("15"))
 	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("7"))

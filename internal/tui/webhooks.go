@@ -43,7 +43,7 @@ func (m WebhooksModel) Init() tea.Cmd {
 	return nil
 }
 
-func (m WebhooksModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *WebhooksModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		if m.detail {
@@ -88,7 +88,7 @@ func (m *WebhooksModel) updateDetail(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m WebhooksModel) View() string {
+func (m *WebhooksModel) View() string {
 	titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("14"))
 	selectedStyle := lipgloss.NewStyle().Background(lipgloss.Color("4")).Foreground(lipgloss.Color("15"))
 	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("7"))

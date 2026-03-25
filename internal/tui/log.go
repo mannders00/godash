@@ -42,7 +42,7 @@ func (m LogModel) Init() tea.Cmd {
 	return nil
 }
 
-func (m LogModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *LogModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -66,7 +66,7 @@ func (m LogModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m LogModel) View() string {
+func (m *LogModel) View() string {
 	titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("14"))
 	levelInfo := lipgloss.NewStyle().Foreground(lipgloss.Color("2"))
 	levelWarn := lipgloss.NewStyle().Foreground(lipgloss.Color("3"))

@@ -81,7 +81,7 @@ func checkSites(sites []SiteItem) tea.Cmd {
 	return tea.Batch(cmds...)
 }
 
-func (m SitesModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *SitesModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case sitesTickMsg:
 		return m, checkSites(m.sites)
@@ -131,7 +131,7 @@ func (m *SitesModel) updateDetail(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m SitesModel) View() string {
+func (m *SitesModel) View() string {
 	titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("14"))
 	selectedStyle := lipgloss.NewStyle().Background(lipgloss.Color("4")).Foreground(lipgloss.Color("15"))
 	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("7"))

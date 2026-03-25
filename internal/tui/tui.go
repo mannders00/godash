@@ -128,28 +128,28 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch m.currentView {
 	case ViewDashboard:
 		newD, cmd := m.dashboard.Update(msg)
-		m.dashboard = newD.(DashboardModel)
+		m.dashboard = *newD.(*DashboardModel)
 		m.focusPanel = m.dashboard.Focused()
 		cmds = append(cmds, cmd)
 	case ViewMachineDetail:
 		newM, cmd := m.machines.Update(msg)
-		m.machines = newM.(MachinesModel)
+		m.machines = *newM.(*MachinesModel)
 		cmds = append(cmds, cmd)
 	case ViewSiteDetail:
 		newS, cmd := m.sites.Update(msg)
-		m.sites = newS.(SitesModel)
+		m.sites = *newS.(*SitesModel)
 		cmds = append(cmds, cmd)
 	case ViewWebhookDetail:
 		newW, cmd := m.webhooks.Update(msg)
-		m.webhooks = newW.(WebhooksModel)
+		m.webhooks = *newW.(*WebhooksModel)
 		cmds = append(cmds, cmd)
 	case ViewScriptDetail:
 		newSc, cmd := m.scripts.Update(msg)
-		m.scripts = newSc.(ScriptsModel)
+		m.scripts = *newSc.(*ScriptsModel)
 		cmds = append(cmds, cmd)
 	case ViewLog:
 		newL, cmd := m.logs.Update(msg)
-		m.logs = newL.(LogModel)
+		m.logs = *newL.(*LogModel)
 		cmds = append(cmds, cmd)
 	}
 

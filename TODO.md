@@ -14,3 +14,4 @@
 - [x] Add real-time updates across all panels
 - [x] Add detail view for each item type
 - [x] Document philosophy (PHILOSOPHY.md)
+- [x] Create sample config with comments

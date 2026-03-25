@@ -1,0 +1,148 @@
+# godash configuration
+# Save this file to ~/.config/godash/config.yaml
+#
+# Run `godash init` to create a default config file
+
+# =============================================================================
+# MACHINES - SSH servers and VMs to monitor
+# =============================================================================
+# TCP health checks on SSH port (22 by default)
+# Supports SSH key authentication for quick connect
+machines:
+  # Example: production server
+  - name: prod-doji           # Display name in dashboard
+    host: 147.182.123.45      # IP or hostname
+    user: root                # SSH user (for connect)
+    port: 22                  # SSH port
+    key_path: ~/.ssh/id_rsa   # Optional: SSH key path
+    labels:                   # Optional: custom labels
+      env: prod
+      provider: digitalocean
+
+  # Example: staging server
+  - name: staging
+    host: 192.168.1.101
+    user: ubuntu
+    port: 22
+    labels:
+      env: staging
+
+  # Example: Hetzner VM
+  - name: hetzner-1
+    host: 95.217.64.200
+    user: root
+    port: 22
+    labels:
+      env: prod
+      provider: hetzner
+
+# =============================================================================
+# SITES - HTTP endpoints to monitor
+# =============================================================================
+# Performs GET requests and checks status codes
+# Useful for monitoring APIs, websites, health endpoints
+sites:
+  # Example: main application
+  - name: myapp.com
+    url: https://myapp.com
+    interval: 60          # Check interval in seconds
+    expect_code: 200      # Expected HTTP status code
+    labels:
+      env: prod
+      type: webapp
+
+  # Example: API health endpoint
+  - name: api-health
+    url: https://api.myapp.com/health
+    interval: 30
+    expect_code: 200
+    labels:
+      env: prod
+      type: api
+
+  # Example: documentation site
+  - name: docs
+    url: https://docs.myapp.com
+    interval: 120
+    expect_code: 200
+    labels:
+      env: prod
+      type: docs
+
+# =============================================================================
+# WEBHOOKS - HTTP endpoints to trigger manually
+# =============================================================================
+# Useful for CI/CD deployments, notifications, integrations
+# Supports GET, POST, PUT, DELETE methods
+webhooks:
+  # Example: GitHub Actions deploy trigger
+  - name: deploy-prod
+    url: https://api.github.com/repos/YOUR_USER/YOUR_REPO/dispatches
+    method: POST
+    # Optional: Authorization header (use env var for secrets)
+    # headers:
+    #   Authorization: "Bearer ${GITHUB_TOKEN}"
+    labels:
+      type: ci
+
+  # Example: Slack notification
+  - name: notify-slack
+    url: https://hooks.slack.com/services/TXXXXXXXX/BXXXXXXXX/XXXXXXXX
+    method: POST
+    labels:
+      type: notification
+
+  # Example: Stripe webhook (for testing)
+  - name: stripe-test
+    url: https://api.stripe.com/v1/webhook_endpoints/YOUR_ENDPOINT
+    method: POST
+    labels:
+      type: payment
+
+# =============================================================================
+# SCRIPTS - Local and remote scripts to run
+# =============================================================================
+# Execute shell scripts on your machine or remote servers
+# Great for deployments, backups, log viewing, etc.
+scripts:
+  # Example: local backup script
+  - name: backup-db
+    command: ./scripts/backup.sh
+    args: []                # Optional arguments
+    remote: false           # Run locally (default)
+    labels:
+      type: backup
+
+  # Example: deploy script
+  - name: deploy-prod
+    command: ./scripts/deploy.sh
+    args: ["prod"]
+    remote: false
+    labels:
+      type: deploy
+
+  # Example: remote script via SSH
+  - name: restart-api
+    command: systemctl
+    args: ["restart", "api"]
+    remote: true            # Run on remote host
+    host: prod              # Machine name from 'machines' section
+    labels:
+      type: ops
+
+  # Example: tail logs
+  - name: logs-api
+    command: tail
+    args: ["-f", "/var/log/api.log"]
+    remote: true
+    host: prod
+    labels:
+      type: logs
+
+# =============================================================================
+# GLOBAL SETTINGS (optional)
+# =============================================================================
+# settings:
+#   refresh_interval: 5     # Global refresh interval (seconds)
+#   timeout: 10             # HTTP/TCP timeout (seconds)
+#   log_file: ~/.cache/godash/godash.log
